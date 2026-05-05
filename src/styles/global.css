@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  --bg: #f7f6f3;
+  --surface: #ffffff;
+  --surface-2: #f2f1ee;
+  --border: #e4e2dc;
+  --border-strong: #ccc9c0;
+
+  --text-primary: #1a1916;
+  --text-secondary: #6b6860;
+  --text-tertiary: #9d9b95;
+
+  --accent: #1a6b45;
+  --accent-light: #e8f5ee;
+
+  --danger: #c0392b;
+  --danger-light: #fdecea;
+  --warning: #b8820a;
+  --warning-light: #fef9e7;
+  --info: #1565c0;
+  --info-light: #e8f0fe;
+  --success: #1a6b45;
+  --success-light: #e8f5ee;
+
+  /* Heatmap color scale — 0 to 10 rooms occupied */
+  --occ-0:  #f7f6f3;
+  --occ-1:  #e8f5ee;
+  --occ-2:  #c5e8d4;
+  --occ-3:  #9dd6b5;
+  --occ-4:  #6dc494;
+  --occ-5:  #44ae77;
+  --occ-6:  #2e9460;
+  --occ-7:  #1e7a4d;
+  --occ-8:  #1a6b45;
+  --occ-9:  #14563a;
+  --occ-10: #0c4029;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.10);
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button { font-family: var(--font-sans); cursor: pointer; border: none; background: none; }
+select { font-family: var(--font-sans); }
