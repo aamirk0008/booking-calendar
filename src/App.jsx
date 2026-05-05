@@ -1,122 +1,137 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useMemo } from 'react';
+import { CalendarProvider, useCalendarContext } from './context/CalendarContext';
+import { useBookings } from './hooks/useBookings';
+// import { CalendarView } from './components/CalendarView/index';
+// import { BookingPanel } from './components/BookingPanel/index';
+import { StatsBar } from './components/StatsBar/index';
+import { FilterBar } from './components/FilterBar/index';
 
-function App() {
-  const [count, setCount] = useState(0)
+function CalendarApp() {
+  const { bookings, loading, error } = useBookings();
+  const { state } = useCalendarContext();
+
+  const filteredBookings = useMemo(() => {
+    return bookings.filter((b) => {
+      return (
+        state.filters.statuses.has(b.status) &&
+        state.filters.roomTypes.has(b.roomType)
+      );
+    });
+  }, [bookings, state.filters]);
+
+  if (loading) return <LoadingScreen />;
+  if (error)   return <ErrorScreen message={error} />;
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="min-h-screen flex flex-col" style={{ background: 'var(--bg)' }}>
 
-      <div className="ticks"></div>
+      {/* Header */}
+      <header
+        className="sticky top-0 z-50 border-b px-7"
+        style={{
+          background: 'var(--surface)',
+          borderColor: 'var(--border)',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+        }}
+      >
+        <div className="max-w-[1400px] mx-auto h-14 flex items-center justify-between gap-4">
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+          {/* Brand */}
+          <div className="flex items-center gap-2.5 shrink-0">
+            <span
+              className="w-2 h-2 rounded-full"
+              style={{ background: 'var(--accent)' }}
+            />
+            <span
+              className="font-semibold text-[15px] tracking-tight"
+              style={{ color: 'var(--text-primary)' }}
+            >
+              Guestara
+            </span>
+            <span
+              className="text-xs pl-3 border-l"
+              style={{ color: 'var(--text-tertiary)', borderColor: 'var(--border)' }}
+            >
+              Occupancy Calendar
+            </span>
+          </div>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+          <FilterBar />
+        </div>
+      </header>
+
+      {/* Main layout */}
+      <main className="flex-1 max-w-[1400px] mx-auto w-full px-7 py-6 flex gap-6 items-start">
+
+        {/* Left — calendar + stats */}
+        <div className="flex-1 min-w-0 flex flex-col gap-4">
+          <StatsBar bookings={filteredBookings} />
+          <CalendarView bookings={filteredBookings} />
+        </div>
+
+        {/* Right — booking panel */}
+        <aside className="w-[340px] shrink-0 sticky top-20">
+          <BookingPanel bookings={filteredBookings} />
+        </aside>
+
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default function App() {
+  return (
+    <CalendarProvider>
+      <CalendarApp />
+    </CalendarProvider>
+  );
+}
+
+function LoadingScreen() {
+  return (
+    <div className="h-screen flex items-center justify-center" style={{ background: 'var(--bg)' }}>
+      <div className="flex flex-col items-center gap-4">
+        <div
+          className="w-9 h-9 rounded-full border-[3px]"
+          style={{
+            borderColor: 'var(--border)',
+            borderTopColor: 'var(--accent)',
+            animation: 'spin 0.8s linear infinite',
+          }}
+        />
+        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+          Loading bookings…
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function ErrorScreen({ message }) {
+  return (
+    <div className="h-screen flex items-center justify-center" style={{ background: 'var(--bg)' }}>
+      <div
+        className="rounded-2xl p-12 text-center max-w-md"
+        style={{
+          background: 'var(--surface)',
+          border: '1px solid var(--border)',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+        }}
+      >
+        <span className="text-4xl block mb-3">⚠</span>
+        <p className="font-semibold text-base mb-2" style={{ color: 'var(--danger)' }}>
+          Failed to load bookings
+        </p>
+        <p
+          className="text-[13px] mb-3"
+          style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}
+        >
+          {message}
+        </p>
+        <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
+          Make sure <code>bookings.json</code> is in the <code>public/</code> folder.
+        </p>
+      </div>
+    </div>
+  );
+}
