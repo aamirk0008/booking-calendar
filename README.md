@@ -2,7 +2,7 @@
 
 A single-page React application that visualizes hotel bookings as an interactive occupancy heatmap calendar. Built as a frontend assignment for Guestara.
 
-![Guestara Occupancy Calendar](./public/preview.png)
+![Guestara Occupancy Calendar](./public/guestara_logo.jpeg)
 
 ## Live Link: https://booking-calendar-seven.vercel.app/
 
