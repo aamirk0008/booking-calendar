@@ -127,7 +127,7 @@ function PanelHeader({ rangeLabel, count, onClear, onExport }) {
         {onExport && count > 0 && (
           <button
             onClick={onExport}
-            className="px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all hover:opacity-80"
+            className="px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all hover:opacity-80 cursor-pointer"
             style={{
               background: 'var(--accent-light)',
               color: 'var(--accent)',
@@ -139,7 +139,7 @@ function PanelHeader({ rangeLabel, count, onClear, onExport }) {
         )}
         <button
           onClick={onClear}
-          className="w-7 h-7 rounded-lg flex items-center justify-center text-base transition-all hover:opacity-70"
+          className="w-7 h-7 rounded-lg flex items-center justify-center text-base transition-all hover:opacity-70 cursor-pointer"
           style={{
             background: 'var(--surface-2)',
             border: '1px solid var(--border)',

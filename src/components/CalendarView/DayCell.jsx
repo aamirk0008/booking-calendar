@@ -2,7 +2,7 @@ import { useCalendarContext } from '../../context/CalendarContext';
 import { toDateKey, isSameDay, isInRange } from '../../utils/dateUtils';
 import { occupancyToColor, occupancyToTextColor } from '../../utils/occupancy';
 
-export function DayCell({ day, occupancyMap, previewRange, cellHandlers }) {
+export function DayCell({ day, occupancyMap, previewRange, cellHandlers, onMouseEnter, onMouseLeave }) {
   const { state, dispatch } = useCalendarContext();
   const { date, isCurrentMonth } = day;
 
@@ -68,6 +68,11 @@ export function DayCell({ day, occupancyMap, previewRange, cellHandlers }) {
     <div
       data-date={dateKey}
       {...cellHandlers}
+      onMouseEnter={(e) => {
+        cellHandlers.onMouseEnter?.(e);
+        onMouseEnter?.(e)
+      }}
+      onMouseLeave={onMouseLeave}
       className="relative flex flex-col p-2 cursor-pointer select-none transition-all duration-75"
       style={{
         minHeight: 80,
