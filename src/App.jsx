@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { CalendarProvider, useCalendarContext } from './context/CalendarContext';
 import { useBookings } from './hooks/useBookings';
 import { CalendarView } from './components/CalendarView/index';
-// import { BookingPanel } from './components/BookingPanel/index';
+import { BookingPanel } from './components/BookingPanel/index';
 import { StatsBar } from './components/StatsBar/index';
 import { FilterBar } from './components/FilterBar/index';
 
@@ -71,7 +71,7 @@ function CalendarApp() {
 
         {/* Right — booking panel */}
         <aside className="w-[340px] shrink-0 sticky top-20">
-          {/* <BookingPanel bookings={filteredBookings} /> */}
+          <BookingPanel bookings={filteredBookings} />
         </aside>
 
       </main>
