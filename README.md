@@ -46,40 +46,54 @@ A single-page React application that visualizes hotel bookings as an interactive
 
 ## Project Structure
 
+```
 booking-calendar/
+│
 ├── public/
-│ └── bookings.json # 201 mock bookings, 10 rooms, Jan–May 2026
+│   └── bookings.json               # 201 mock bookings, 10 rooms, Jan–May 2026
+│
 ├── src/
-│ ├── styles/
-│ │ └── global.css # Tailwind import, CSS tokens, heatmap scale
-│ ├── utils/
-│ │ ├── dateUtils.js # toDateKey, parseLocalDate, getCalendarDays, etc.
-│ │ ├── occupancy.js # buildOccupancyMap, getOverlappingBookings, computeMonthStats
-│ │ └── exportCSV.js # Blob CSV download helper
-│ ├── context/
-│ │ └── CalendarContext.jsx # useReducer state, localStorage persistence
-│ ├── hooks/
-│ │ ├── useBookings.js # fetch with loading + error states
-│ │ └── useDragSelect.js # native drag-to-select, global mouseup
-│ ├── components/
-│ │ ├── CalendarView/
-│ │ │ ├── index.jsx # Composes header + grid + legend
-│ │ │ ├── MonthHeader.jsx # Prev / Next / Today navigation
-│ │ │ ├── WeekdayRow.jsx # Sun–Sat label row
-│ │ │ ├── CalendarGrid.jsx # 42-cell grid, occupancy map, tooltip wiring
-│ │ │ └── DayCell.jsx # Heatmap cell, drag handlers, selection highlight
-│ │ ├── BookingPanel/
-│ │ │ └── index.jsx # Overlapping bookings list, CSV export
-│ │ ├── StatsBar/
-│ │ │ └── index.jsx # Month-level stat cards
-│ │ ├── FilterBar/
-│ │ │ └── index.jsx # Status + room type pill toggles
-│ │ └── HoverTooltip/
-│ │ └── index.jsx # Fixed-position hover preview card
-│ ├── App.jsx # Root layout, filteredBookings memo, loading/error screens
-│ └── main.jsx # React root mount
+│   ├── styles/
+│   │   └── global.css              # Tailwind import, CSS tokens, heatmap scale
+│   │
+│   ├── utils/
+│   │   ├── dateUtils.js            # toDateKey, parseLocalDate, getCalendarDays
+│   │   ├── occupancy.js            # buildOccupancyMap, getOverlappingBookings, computeMonthStats
+│   │   └── exportCSV.js            # Blob CSV download helper
+│   │
+│   ├── context/
+│   │   └── CalendarContext.jsx     # useReducer state, localStorage persistence
+│   │
+│   ├── hooks/
+│   │   ├── useBookings.js          # fetch with loading + error states
+│   │   └── useDragSelect.js        # native drag-to-select, global mouseup
+│   │
+│   ├── components/
+│   │   ├── CalendarView/
+│   │   │   ├── index.jsx           # Composes header + grid + legend
+│   │   │   ├── MonthHeader.jsx     # Prev / Next / Today navigation
+│   │   │   ├── WeekdayRow.jsx      # Sun–Sat label row
+│   │   │   ├── CalendarGrid.jsx    # 42-cell grid, occupancy map, tooltip wiring
+│   │   │   └── DayCell.jsx         # Heatmap cell, drag handlers, selection highlight
+│   │   │
+│   │   ├── BookingPanel/
+│   │   │   └── index.jsx           # Overlapping bookings list, CSV export
+│   │   │
+│   │   ├── StatsBar/
+│   │   │   └── index.jsx           # Month-level stat cards
+│   │   │
+│   │   ├── FilterBar/
+│   │   │   └── index.jsx           # Status + room type pill toggles
+│   │   │
+│   │   └── HoverTooltip/
+│   │       └── index.jsx           # Fixed-position hover preview card
+│   │
+│   ├── App.jsx                     # Root layout, filteredBookings memo, loading/error screens
+│   └── main.jsx                    # React root mount
+│
 ├── vite.config.js
 └── package.json
+```
 
 
 ---
